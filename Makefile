@@ -16,6 +16,8 @@ OBJECTS := log.o network.o utils.o udptunnel.o
 
 all: depend udptunnel
 
+all-static: depend static
+
 install:
 	$(INSTALL) -d $(BASEDIR)$(prefix)/sbin/
 	$(INSTALL) -m 0755 udptunnel $(BASEDIR)$(prefix)/sbin/
@@ -28,6 +30,9 @@ clean:
 
 udptunnel: $(OBJECTS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDADD) $(LIBS)
+
+static: $(OBJECTS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -static -o udptunnel $^ $(LDADD) $(LIBS)
 
 depend: Makefile.depend
 Makefile.depend:
